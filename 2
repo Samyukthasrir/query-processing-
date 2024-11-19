@@ -1,0 +1,18 @@
+import numpy as np
+import pandas as pd
+
+# Create a DataFrame with random values
+np.random.seed(42)  # For reproducibility
+df = pd.DataFrame(np.random.randn(10, 4), columns=['A', 'B', 'C', 'D'])
+
+# Define a function to style the DataFrame
+def style_dataframe(s):
+    return [
+        'background-color: black; color: yellow' for _ in s
+    ]
+
+# Apply the styling function to the DataFrame
+styled_df = df.style.apply(style_dataframe, axis=1)
+
+# Display the styled DataFrame
+styled_df
