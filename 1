@@ -1,0 +1,12 @@
+import numpy as np
+import pandas as pd
+
+np.random.seed(42) 
+df = pd.DataFrame(np.random.randn(10, 4), columns=['A', 'B', 'C', 'D'])
+nan_indices = [(0, 2), (3, 2), (5, 0), (8, 3)]  
+for i, j in nan_indices:
+    df.iat[i, j] = np.nan
+def highlight_nan(s):
+    return ['background-color: red' if pd.isna(v) else '' for v in s]
+styled_df = df.style.apply(highlight_nan, axis=1)
+styled_df
