@@ -1,0 +1,25 @@
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Define the stock ticker and date range
+ticker = "GOOGL"
+start_date = "2023-01-01"
+end_date = "2023-12-31"
+
+# Fetch historical stock data
+data = yf.download(ticker, start=start_date, end=end_date)
+
+# Display the first few rows of data
+print(data.head())
+
+# Plot the trading volume as a bar chart
+plt.figure(figsize=(12, 6))
+plt.bar(data.index, data['Volume'], color='green', alpha=0.7)
+plt.title(f"Trading Volume of Alphabet Inc. ({start_date} to {end_date})")
+plt.xlabel("Date")
+plt.ylabel("Volume")
+plt.xticks(rotation=45)  # Rotate x-axis labels for better visibility
+plt.tight_layout()  # Adjust layout to prevent overlap
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
