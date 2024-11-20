@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+
+# Creating the DataFrame based on the image
+data = {
+    "ord_no": [70001, np.nan, 70002, 70004, np.nan, 70005, "--", 70010, 70003, 70012, np.nan, 70013],
+    "purch_amt": [150.5, 270.65, 65.26, 110.5, 948.5, 2400.6, 5760, "?", 12.43, 2480.4, 250.45, 3045.6],
+    "ord_date": ["?", "2012-09-10", np.nan, "2012-08-17", "2012-09-10", "2012-07-27", "2012-09-10", "2012-10-10", "2012-10-10", "2012-06-27", "2012-08-17", "2012-04-25"],
+    "customer_id": [3002, 3001, 3001, 3003, 3002, 3001, 3001, 3004, "--", 3002, 3001, 3001],
+    "salesman_id": [5002, 5003, "?", 5001, np.nan, 5002, 5001, "?", 5003, 5002, 5003, "--"],
+}
+
+df = pd.DataFrame(data)
+
+# Replacing placeholders with NaN for easier processing
+df.replace(["?", "--"], np.nan, inplace=True)
+
+# Converting columns to appropriate data types
+df["ord_no"] = pd.to_numeric(df["ord_no"], errors="coerce")
+df["purch_amt"] = pd.to_numeric(df["purch_amt"], errors="coerce")
+df["customer_id"] = pd.to_numeric(df["customer_id"], errors="coerce")
+df["salesman_id"] = pd.to_numeric(df["salesman_id"], errors="coerce")
+
+# Handling missing values
+df["ord_no"].fillna(df["ord_no"].mode()[0], inplace=True)  # Replace with mode
+df["purch_amt"].fillna(df["purch_amt"].mean(), inplace=True)  # Replace with mean
+df["ord_date"].fillna(df["ord_date"].mode()[0], inplace=True)  # Replace with mode
+df["customer_id"].fillna(df["customer_id"].mode()[0], inplace=True)  # Replace with mode
+df["salesman_id"].fillna(df["salesman_id"].mode()[0], inplace=True)  # Replace with mode
+
+print(df)
